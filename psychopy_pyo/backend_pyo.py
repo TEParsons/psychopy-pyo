@@ -345,6 +345,7 @@ class SoundPyo(_SoundBase):
         if hasattr(self, "_parseSpeaker"):
             speaker = self._parseSpeaker(speaker)
         self.speaker = speaker
+        self.name = name
         self.sampleRate = actualSampleRate
         self.format = bits
         self.isStereo = stereo
@@ -353,7 +354,6 @@ class SoundPyo(_SoundBase):
         self.startTime = start
         self.stopTime = stop
         self.autoLog = autoLog
-        self.name = name
 
         # try to create sound; set volume and loop before setSound (else
         # needsUpdate=True)
