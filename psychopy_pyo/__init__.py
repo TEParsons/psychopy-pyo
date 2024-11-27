@@ -16,5 +16,8 @@ from .backend_pyo import (
     get_input_devices,
     get_output_devices,
     getDevices,
-    SoundPyo)
+    SoundPyo,
+    pyoSndServer,
+    audioDriver,
+)
 
