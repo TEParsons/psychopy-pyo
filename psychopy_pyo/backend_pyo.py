@@ -466,14 +466,26 @@ class SoundPyo(_SoundBase):
         self._updateSnd()
         self.duration = self._sndTable.getDur()
 
-    def _setSndFromArray(self, thisArray):
+    def _setSndFromClip(self, clip):
+        thisArray = clip.samples
         self._sndTable = pyo.DataTable(size=len(thisArray),
                                        init=thisArray.T.tolist(),
                                        chnls=self.channels)
         self._updateSnd()
         # a DataTable has no .getDur() method, so just store the duration:
         self.duration = float(len(thisArray)) / self.sampleRate
+    
+    def _setSndFromArrayLegacy(self, thisArray):
+        """
+        Prior to 2025.1.0, _SoundBase didn't have a `_setSndFromArray` method to inherit. This legacy method can be substituted in if the version of PsychoPy installed is too old.
+        """
+        from psychopy.sound.audioclip import AudioClip
+        clip = AudioClip(thisArray, sampleRateHz=self.sampleRate)
+        self._setSndFromClip(clip)
 
+
+if not hasattr(SoundPyo, "_setSoundFromArray"):
+    SoundPyo._setSndFromArray = SoundPyo._setSndFromArrayLegacy
 
 if __name__ == "__main__":
     pass
